@@ -129,7 +129,7 @@ export default function Welcome() {
           <h1
             ref={refHeading}
             className='heading text-center font-semibold text-2xl'>
-            Hello Safa!!
+            Helloo Biru!!
           </h1>
           <br />
           <p className='text-[#f0f0f0] font-extralight z-10'>
