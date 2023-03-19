@@ -2,10 +2,11 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Tabs } from 'flowbite';
 import { useLazyAxios } from 'use-axios-client';
 import axios from 'axios';
+import { FaSadCry } from 'react-icons/fa';
 export default function RandomJoke() {
   const [data, setData] = useState({ data: [] });
   const [isLoading, setIsLoading] = useState(false);
-  const [err, setErr] = useState('');
+  const [err, setErr] = useState(false);
   const handleClick = async () => {
     setIsLoading(true);
     try {
@@ -24,13 +25,13 @@ export default function RandomJoke() {
 
       setData(data);
     } catch (err) {
-      setErr(err.message);
+      setErr(true);
     } finally {
       setIsLoading(false);
     }
   };
   //   console.log(data?.body[0].setup);
-  console.log(isLoading);
+  console.log(err);
   return (
     <>
       <section className='container w-full mx-auto px-4 md:px-0'>
@@ -67,26 +68,40 @@ export default function RandomJoke() {
             </p>
           </div>
           <div className='p-4 rounded-lg bg-white'>
-            {data?.success === true ? (
+            {err ? (
+              <div>
+                <p>
+                  Yahhh ada masalah, coba besok lagi ya.....kena limit
+                  kayaknya...
+                </p>
+                <p className='text-yellow-500 text-6xl'>
+                  <FaSadCry />
+                </p>
+              </div>
+            ) : (
               <>
-                {isLoading ? (
-                  'Sabar...loading dulu'
-                ) : (
+                {data?.success === true ? (
                   <>
-                    <h4 className='text-black font-semibold text-2xl'>
-                      {data?.body[0].setup}
-                    </h4>
-                    <p className='text-slate-500 font-normal text-lg'>
-                      {data?.body[0].punchline}
-                    </p>
-                    <br />
-                    <p>WKWKKWW LUCUUU NGGAAA??</p>
-                    <p>Monmaap kalau garing</p>
+                    {isLoading ? (
+                      'Sabar...loading dulu'
+                    ) : (
+                      <>
+                        <h4 className='text-black font-semibold text-2xl'>
+                          {data?.body[0].setup}
+                        </h4>
+                        <p className='text-slate-500 font-normal text-lg'>
+                          {data?.body[0].punchline}
+                        </p>
+                        <br />
+                        <p>WKWKKWW LUCUUU NGGAAA??</p>
+                        <p>Monmaap kalau garing</p>
+                      </>
+                    )}
                   </>
+                ) : (
+                  <p>Click tombol dibawah ini yaa!!!</p>
                 )}
               </>
-            ) : (
-              <p>Click tombol dibawah ini yaa!!!</p>
             )}
           </div>
           <div className='flex gap-4 flex-col md:flex-row'>
